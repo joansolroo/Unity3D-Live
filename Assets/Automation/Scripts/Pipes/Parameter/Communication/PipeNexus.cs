@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Pipes;
 using System;
 
-public class PipeNexus: MonoBehaviour {
+public class PipeNexus : MonoBehaviour
+{
 
     Dictionary<string, PipeHub> nexus = new Dictionary<string, PipeHub>();
 
@@ -12,7 +13,7 @@ public class PipeNexus: MonoBehaviour {
     {
         get
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 GameObject go = new GameObject();
                 PipeNexus pn = go.AddComponent<PipeNexus>();
@@ -24,11 +25,7 @@ public class PipeNexus: MonoBehaviour {
                 return null;
             }
             return _instance;
-        }/*
-        set
-        {
-            _instance = value;
-        }*/
+        }
     }
     GameObject hubs;
     //Awake is always called before any Start functions
@@ -41,8 +38,8 @@ public class PipeNexus: MonoBehaviour {
             //if not, set instance to this
             _instance = this;
 
-            hubs = new GameObject("LOCAL HUBS");
-            hubs.transform.parent = this.transform;
+            Initialize();
+
             //Sets this to not be destroyed when reloading scene
             //DontDestroyOnLoad(gameObject);
         }
@@ -52,7 +49,13 @@ public class PipeNexus: MonoBehaviour {
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
         }
-       
+
+    }
+    protected void Initialize()
+    {
+
+        hubs = new GameObject("LOCAL HUBS");
+        hubs.transform.parent = this.transform;
     }
 
     private static bool applicationIsQuitting = false;
@@ -74,7 +77,7 @@ public class PipeNexus: MonoBehaviour {
         PipeHub ph;
         if (!nexus.ContainsKey(channel))
         {
-            GameObject go =  new GameObject();
+            GameObject go = new GameObject();
             ph = go.AddComponent<PipeHub>();
             ph.channel = channel;
             go.transform.parent = hubs.transform;
@@ -84,7 +87,7 @@ public class PipeNexus: MonoBehaviour {
         {
             ph = nexus[channel];
         }
-        //Debug.Log(ph.channel + "->" + pipe.gameObject.name);
+
         ph.PlugOutput(pipe);
         pipe.PlugInput(ph);
     }
@@ -110,7 +113,7 @@ public class PipeNexus: MonoBehaviour {
         {
             ph = nexus[channel];
         }
-        //Debug.Log(ph.channel + "<-" + pipe.gameObject.name);
+
         ph.PlugInput(pipe);
         pipe.PlugOutput(ph);
     }
@@ -145,7 +148,7 @@ public class PipeHub : AutoPipe
     object prev = 0;
     protected override bool Evaluate()
     {
-       
+
         value = GetFirstInput();
         bool change = prev != value;
         if (change)
@@ -158,7 +161,7 @@ public class PipeHub : AutoPipe
     protected override void InitializePipe()
     {
         _type = Pipes.Type.INOUT;
-        
+
     }
     protected override void InitializeConnections()
     {
