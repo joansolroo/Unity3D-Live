@@ -3,27 +3,22 @@ using System.Collections;
 using System;
 
 using UnityEditor;
+using Pipes;
 
 namespace OSC
 {
-    public class ChannelIn : Pipes.AutoPipe
+    public class ChannelIn : Pipes.Pipe
     {
 
         [Header("Setup")]
-        protected OSC.Receiver receiver;
+        public OSC.Receiver receiver;
         public string address;
-        public bool isTrigger = false;
+
+        public bool isTrigger = false; //Handle this with types
+
         [Header("Value")]
         public float defaultValue = 0;
         public float value = 0;
-
-        public override string pipeName
-        {
-            get
-            {
-                return "OSC - Read: " + address;
-            }
-        }
 
         void LateUpdate()
         {
@@ -52,19 +47,37 @@ namespace OSC
             }
             return defaultValue;
         }
-
+        protected void Start()
+        {
+            //parent = transform.parent.gameObject.GetComponent<Connector>();
+            InitializeConnections();
+            //AutoPlug();
+        }
+        /*
         protected override void InitializePipe()
         {
             _direction = Pipes.Direction.DOWNWARDS;
             _type = Pipes.Type.OUT;
 
         }
-        protected override void InitializeConnections()
+        */
+        protected void InitializeConnections()
         {
-            receiver = transform.parent.gameObject.GetComponent<Receiver>();
+            //receiver = transform.parent.gameObject.GetComponent<Receiver>();
             receiver.AddChannel(address, defaultValue);
         }
+        
+
         float prev = 0;
+
+        public override Pipes.Type type
+        {
+            get
+            {
+                return Pipes.Type.OUT;
+            }
+        }
+
         protected override bool Evaluate()
         {
             object obj = receiver.GetValue(address);
@@ -85,23 +98,6 @@ namespace OSC
         public override object GetValue()
         {
             return value;
-        }
-
-        // Add a menu item to create custom GameObjects.
-        // Priority 1 ensures it is grouped with the other menu items of the same kind
-        // and propagated to the hierarchy dropdown and hierarch context menus. 
-        [MenuItem("GameObject/Parameters/Communication/OSC/Read", false, 10)]
-        static void CreateContextMenu(MenuCommand menuCommand)
-        {
-            if (CheckMenu())
-            {
-                Pipes.AutoPipe.CreateGameObjectWithComponent<ChannelIn>(menuCommand);
-            }
-        }
-        [MenuItem("GameObject/Parameters/Communication/OSC/Read", true)]
-        static bool CheckMenu()
-        {
-            return (Selection.activeTransform.gameObject != null && Selection.activeTransform.gameObject.GetComponent<Connection>()!=null);
         }
     }
 

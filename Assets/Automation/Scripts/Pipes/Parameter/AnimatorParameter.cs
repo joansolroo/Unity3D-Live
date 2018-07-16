@@ -5,34 +5,29 @@ using UnityEditor;
 
 using Pipes;
 
-public class AnimatorParameter : AutoPipe
+public class AnimatorParameter : Pipe
 {
     [System.Serializable]
     public enum ParameterType
     {
         Int, Float, Bool, Trigger
     }
-    [Header("Parameter Info")]
-    [SerializeField]
-    [Tooltip("This is the parameter type, must match with the one on the animator")]
-    ParameterType parameterType = ParameterType.Int;
-    [SerializeField]
-    [Tooltip("This is the parameter name, must match with the one on the animator")]
-    string parameterName = "NAME";
-
     [Header("Parameter Value")]
     [SerializeField]
     float value = 0;
     float _previousValue = 0;
+
     [SerializeField]
     bool changed = false;
-    Animator animator;
+    public Animator animator;
+    public AnimatorControllerParameter parameter;
+    public int parameterIdx = 0;
 
-    public override string pipeName
+    public override Type type
     {
         get
         {
-            return "Anim.parameter [" +parameterName +"="+value+"]";
+            return Type.IN;
         }
     }
 
@@ -43,10 +38,11 @@ public class AnimatorParameter : AutoPipe
         {
             return false;
         }
-        try {
+        try
+        {
             value = (float)obj;
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             return false;
         }
@@ -54,61 +50,34 @@ public class AnimatorParameter : AutoPipe
         {
             changed = false;
         }
-        else {
+        else
+        {
             changed = true;
-
-            switch (parameterType)
+            if(parameter == null)
             {
-                case (ParameterType.Int):
-                    animator.SetInteger(parameterName, (int)value);
+                parameter = animator.parameters[parameterIdx];
+            }
+            switch (parameter.type)
+            {
+                case (AnimatorControllerParameterType.Int):
+                    animator.SetInteger(parameter.nameHash, (int)value);
                     break;
-                case (ParameterType.Float):
-                    animator.SetFloat(parameterName, value);
+                case (AnimatorControllerParameterType.Float):
+                    animator.SetFloat(parameter.nameHash, value);
                     break;
-                case (ParameterType.Bool):
-                    animator.SetBool(parameterName, value > 0);
+                case (AnimatorControllerParameterType.Bool):
+                    animator.SetBool(parameter.nameHash, value > 0);
                     break;
-                case (ParameterType.Trigger):
+                case (AnimatorControllerParameterType.Trigger):
                     if (value > 0)
                     {
-                        animator.SetTrigger(parameterName);
+                        animator.SetTrigger(parameter.nameHash);
                     }
                     break;
             }
             _previousValue = value;
-
-            UpdateName();
         }
         return changed;
-    }
-
-    protected override void InitializePipe()
-    {
-        _type = Type.IN;
-        _direction = Direction.UPWARDS;
-    }
-    protected override void InitializeConnections()
-    {
-        animator = transform.parent.gameObject.GetComponent<Animator>();
-    }
-
-
-    // Add a menu item to create custom GameObjects.
-    // Priority 1 ensures it is grouped with the other menu items of the same kind
-    // and propagated to the hierarchy dropdown and hierarch context menus. 
-    [MenuItem("GameObject/Parameters/Animator/Parameter", false, 10)]
-    static void CreateContextMenu(MenuCommand menuCommand)
-    {
-        if (CheckMenu())
-        {
-            AnimatorParameter p = AutoPipe.CreateGameObjectWithComponent<AnimatorParameter>(menuCommand);
-            p.animator = (menuCommand.context as GameObject).GetComponent<Animator>();
-        }
-    }
-    [MenuItem("GameObject/Parameters/Animator/Parameter", true)]
-    static bool CheckMenu()
-    {
-        return (Selection.activeTransform.gameObject!=null && Selection.activeTransform.gameObject.GetComponent<Animator>() != null);
     }
 
     public override object GetValue()

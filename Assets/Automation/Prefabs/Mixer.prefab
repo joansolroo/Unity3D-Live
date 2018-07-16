@@ -16,10 +16,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000014078927518}
-  - 114: {fileID: 114000010026581092}
+  - component: {fileID: 4000014078927518}
+  - component: {fileID: 114000010026581092}
   m_Layer: 0
   m_Name: "\u21D6 Set: ch1 "
   m_TagString: Untagged
@@ -32,10 +32,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000011495827772}
-  - 114: {fileID: 114000011491187274}
+  - component: {fileID: 4000011495827772}
+  - component: {fileID: 114000011491187274}
   m_Layer: 0
   m_Name: "\u21E7 Random [0,1] "
   m_TagString: Untagged
@@ -48,9 +48,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000012530326204}
+  - component: {fileID: 4000012530326204}
   m_Layer: 0
   m_Name: Mixer
   m_TagString: Untagged
@@ -63,10 +63,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010332938418}
-  - 114: {fileID: 114000010369924566}
+  - component: {fileID: 4000010332938418}
+  - component: {fileID: 114000010369924566}
   m_Layer: 0
   m_Name: Local Console
   m_TagString: Untagged
@@ -79,10 +79,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000013653320708}
-  - 114: {fileID: 114000012605832740}
+  - component: {fileID: 4000013653320708}
+  - component: {fileID: 114000012605832740}
   m_Layer: 0
   m_Name: "\u21E6 OSC - Send: /OSC-ch1 "
   m_TagString: Untagged
@@ -95,10 +95,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000012505716812}
-  - 114: {fileID: 114000012555891190}
+  - component: {fileID: 4000012505716812}
+  - component: {fileID: 114000012555891190}
   m_Layer: 0
   m_Name: "\u21E7 Random [0,1] "
   m_TagString: Untagged
@@ -111,10 +111,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000011507019074}
-  - 114: {fileID: 114000011693215208}
+  - component: {fileID: 4000011507019074}
+  - component: {fileID: 114000011693215208}
   m_Layer: 0
   m_Name: "\u21E6 Get: ch2 "
   m_TagString: Untagged
@@ -127,10 +127,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000014028454396}
-  - 114: {fileID: 114000013424391052}
+  - component: {fileID: 4000014028454396}
+  - component: {fileID: 114000013424391052}
   m_Layer: 0
   m_Name: "\u21E6 Set: ch2 "
   m_TagString: Untagged
@@ -143,14 +143,14 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000013593352686}
-  - 114: {fileID: 114000013803659794}
-  - 114: {fileID: 114000011553987384}
-  - 114: {fileID: 114000011639979534}
-  - 114: {fileID: 114000010251146114}
-  - 114: {fileID: 114000011836253894}
+  - component: {fileID: 4000013593352686}
+  - component: {fileID: 114000013803659794}
+  - component: {fileID: 114000011553987384}
+  - component: {fileID: 114000011639979534}
+  - component: {fileID: 114000010251146114}
+  - component: {fileID: 114000011836253894}
   m_Layer: 0
   m_Name: OSC Connection
   m_TagString: Untagged
@@ -163,10 +163,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000013663659844}
-  - 114: {fileID: 114000013461208834}
+  - component: {fileID: 4000013663659844}
+  - component: {fileID: 114000013461208834}
   m_Layer: 0
   m_Name: "\u25C7 OSC - Read: /OSC-ch1 "
   m_TagString: Untagged
@@ -183,12 +183,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000014028454396}
   - {fileID: 4000011507019074}
   m_Father: {fileID: 4000012530326204}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011495827772
 Transform:
   m_ObjectHideFlags: 1
@@ -198,10 +198,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000014028454396}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011507019074
 Transform:
   m_ObjectHideFlags: 1
@@ -211,10 +211,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000010332938418}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012505716812
 Transform:
   m_ObjectHideFlags: 1
@@ -224,10 +224,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013653320708}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012530326204
 Transform:
   m_ObjectHideFlags: 1
@@ -237,12 +237,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000013593352686}
   - {fileID: 4000010332938418}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013593352686
 Transform:
   m_ObjectHideFlags: 1
@@ -252,12 +252,12 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000013663659844}
   - {fileID: 4000013653320708}
   m_Father: {fileID: 4000012530326204}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013653320708
 Transform:
   m_ObjectHideFlags: 1
@@ -267,11 +267,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000012505716812}
   m_Father: {fileID: 4000013593352686}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013663659844
 Transform:
   m_ObjectHideFlags: 1
@@ -281,11 +281,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000014078927518}
   m_Father: {fileID: 4000013593352686}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000014028454396
 Transform:
   m_ObjectHideFlags: 1
@@ -295,11 +295,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011495827772}
   m_Father: {fileID: 4000010332938418}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000014078927518
 Transform:
   m_ObjectHideFlags: 1
@@ -309,10 +309,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013663659844}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114000010026581092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -388,6 +388,9 @@ MonoBehaviour:
   RemoteIP: 127.0.0.1
   SendToPort: 8000
   ListenerPort: 8000
+  connect: 0
+  receiver: {fileID: 0}
+  sender: {fileID: 0}
 --- !u!114 &114000011693215208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -466,6 +469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateMode: 0
+  receiver: {fileID: 0}
   address: /OSC-ch1
   isTrigger: 0
   defaultValue: 0
