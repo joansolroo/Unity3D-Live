@@ -87,10 +87,6 @@ namespace Pipes
         protected bool inputChanged = false;
         protected bool outputChanged = false;
 
-        public bool HasInput(Connector _in)
-        {
-            return input.ContainsKey(_in.id);
-        }
         public void PlugInput(Connector _in)
         {
             input[_in.id] = _in;
@@ -98,11 +94,6 @@ namespace Pipes
         public void UnplugInput(Connector _in)
         {
             input.Remove(_in.id);
-        }
-
-        public bool HasOutput(Connector _out)
-        {
-            return output.ContainsKey(_out.id);
         }
         public void PlugOutput(Connector _out)
         {

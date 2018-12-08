@@ -7,12 +7,26 @@ using UnityEditor;
 public class NexusOut : Pipes.AutoPipe
 {
     [SerializeField]
-    string address;
+    private string address;
     public override string pipeName
     {
         get
         {
             return "Get: " + address;
+        }
+    }
+
+    public string Address
+    {
+        get
+        {
+            return address;
+        }
+
+        set
+        {
+            address = value;
+            UpdateName();
         }
     }
 
@@ -49,8 +63,8 @@ public class NexusOut : Pipes.AutoPipe
         {
             PipeNexus.instance.RemoveOutput(previousAddress, this);
         }
-        PipeNexus.instance.AddOutput(address, this);
-        previousAddress = address;
+        PipeNexus.instance.AddOutput(Address, this);
+        previousAddress = Address;
     }
 
     // Add a menu item to create custom GameObjects.

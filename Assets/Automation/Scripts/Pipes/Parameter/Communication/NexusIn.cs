@@ -15,6 +15,20 @@ public class NexusIn : Pipes.AutoPipe
         }
     }
 
+    public string Address
+    {
+        get
+        {
+            return address;
+        }
+
+        set
+        {
+            address = value;
+            UpdateName();
+        }
+    }
+
     public override object GetValue()
     {
         return value;
@@ -50,8 +64,8 @@ public class NexusIn : Pipes.AutoPipe
         {
             PipeNexus.instance.RemoveInput(previousAddress, this);
         }
-        PipeNexus.instance.AddInput(address, this);
-        previousAddress = address;
+        PipeNexus.instance.AddInput(Address, this);
+        previousAddress = Address;
     }
 
     // Add a menu item to create custom GameObjects.

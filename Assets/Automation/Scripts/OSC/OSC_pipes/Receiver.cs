@@ -29,6 +29,7 @@ namespace OSC
             //Debug.Log(msgString); //log the message and values coming from OSC
 
             values[msgAddress] = msgValue == null ? 0 : msgValue;
+            Debug.Log(msgValue); //log the message and values coming from OSC
         }
 
         public void AddChannel(string _address, object defaultValue)

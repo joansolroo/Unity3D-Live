@@ -209,7 +209,7 @@ namespace Pipes
 
         protected void OnValidate()
         {
-            if (transform != null)
+            if (transform != null && transform.parent!=null)
             {
                 parent = transform.parent.gameObject.GetComponent<Connector>();
             }

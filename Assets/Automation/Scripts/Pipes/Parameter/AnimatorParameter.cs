@@ -5,29 +5,71 @@ using UnityEditor;
 
 using Pipes;
 
-public class AnimatorParameter : Pipe
+public class AnimatorParameter : AutoPipe
 {
     [System.Serializable]
     public enum ParameterType
     {
         Int, Float, Bool, Trigger
     }
+    public static ParameterType Cast(AnimatorControllerParameterType aType)
+    {
+        switch (aType){
+            case AnimatorControllerParameterType.Bool: return ParameterType.Bool;
+            case AnimatorControllerParameterType.Float: return ParameterType.Float;
+            case AnimatorControllerParameterType.Int: return ParameterType.Int;
+            case AnimatorControllerParameterType.Trigger: return ParameterType.Trigger;
+            default: return ParameterType.Float;
+        }
+    }
+    [Header("Parameter Info")]
+    [SerializeField]
+    [Tooltip("This is the parameter type, must match with the one on the animator")]
+    public ParameterType parameterType = ParameterType.Int;
+    [SerializeField]
+    [Tooltip("This is the parameter name, must match with the one on the animator")]
+    private string parameterName = "NAME";
+
     [Header("Parameter Value")]
     [SerializeField]
     float value = 0;
     float _previousValue = 0;
-
     [SerializeField]
     bool changed = false;
-    public Animator animator;
-    public AnimatorControllerParameter parameter;
-    public int parameterIdx = 0;
+    Animator animator;
 
-    public override Type type
+    public override string pipeName
     {
         get
         {
-            return Type.IN;
+            return "Anim.parameter [" +parameterName +"="+value+"]";
+        }
+    }
+
+    public string ParameterName
+    {
+        get
+        {
+            return parameterName;
+        }
+
+        set
+        {
+            parameterName = value;
+            UpdateName();
+        }
+    }
+
+    public Animator Animator
+    {
+        get
+        {
+            return animator;
+        }
+
+        set
+        {
+            animator = value;
         }
     }
 
@@ -38,11 +80,10 @@ public class AnimatorParameter : Pipe
         {
             return false;
         }
-        try
-        {
+        try {
             value = (float)obj;
         }
-        catch (System.Exception e)
+        catch(System.Exception)
         {
             return false;
         }
@@ -50,34 +91,62 @@ public class AnimatorParameter : Pipe
         {
             changed = false;
         }
-        else
-        {
+        else {
             changed = true;
-            if(parameter == null)
+            /*
+            switch (parameterType)
             {
-                parameter = animator.parameters[parameterIdx];
-            }
-            switch (parameter.type)
-            {
-                case (AnimatorControllerParameterType.Int):
-                    animator.SetInteger(parameter.nameHash, (int)value);
+                case (ParameterType.Int):
+                    animator.SetInteger(parameterName, (int)value);
                     break;
-                case (AnimatorControllerParameterType.Float):
-                    animator.SetFloat(parameter.nameHash, value);
+                case (ParameterType.Float):
+                    animator.SetFloat(parameterName, value);
                     break;
-                case (AnimatorControllerParameterType.Bool):
-                    animator.SetBool(parameter.nameHash, value > 0);
+                case (ParameterType.Bool):
+                    animator.SetBool(parameterName, value > 0);
                     break;
-                case (AnimatorControllerParameterType.Trigger):
+                case (ParameterType.Trigger):
                     if (value > 0)
                     {
-                        animator.SetTrigger(parameter.nameHash);
+                        animator.SetTrigger(parameterName);
                     }
                     break;
             }
+            */
             _previousValue = value;
+            
+            UpdateName();
         }
         return changed;
+    }
+
+    protected override void InitializePipe()
+    {
+        _type = Type.IN;
+        _direction = Direction.UPWARDS;
+    }
+    protected override void InitializeConnections()
+    {
+        animator = transform.parent.gameObject.GetComponent<Animator>();
+    }
+
+
+    // Add a menu item to create custom GameObjects.
+    // Priority 1 ensures it is grouped with the other menu items of the same kind
+    // and propagated to the hierarchy dropdown and hierarch context menus. 
+    [MenuItem("GameObject/Parameters/Animator/Parameter", false, 10)]
+    static void CreateContextMenu(MenuCommand menuCommand)
+    {
+        if (CheckMenu())
+        {
+            AnimatorParameter p = AutoPipe.CreateGameObjectWithComponent<AnimatorParameter>(menuCommand);
+            p.animator = (menuCommand.context as GameObject).GetComponent<Animator>();
+        }
+    }
+    [MenuItem("GameObject/Parameters/Animator/Parameter", true)]
+    static bool CheckMenu()
+    {
+        return (Selection.activeTransform.gameObject!=null && Selection.activeTransform.gameObject.GetComponent<Animator>() != null);
     }
 
     public override object GetValue()

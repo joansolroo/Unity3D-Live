@@ -43,8 +43,9 @@ public class AnimatorProperty : AutoPipe
         try {
             value = (float)obj;
         }
-        catch(System.Exception e)
+        catch (System.Exception)
         {
+
             return false;
         }
         if (value == _previousValue)

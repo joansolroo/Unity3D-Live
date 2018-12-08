@@ -9,7 +9,7 @@ namespace OSC {
 
         [Header("Connection setup")]
         [SerializeField]
-        public string RemoteIP = "127.0.0.1"; //127.0.0.1 signifies a local host (if testing locally
+        protected string RemoteIP = "127.0.0.1"; //127.0.0.1 signifies a local host (if testing locally
         [SerializeField]
         public int SendToPort = 9000; //the port you will be sending from
         [SerializeField]
@@ -18,48 +18,14 @@ namespace OSC {
 
         protected Osc handler;
 
-        [SerializeField] bool connect = false;
-
-        public Receiver receiver;
-        public Sender sender;
-
-        private void Start()
-        {
-            receiver = GetComponent<Receiver>();
-            sender = GetComponent<Sender>();
-        }
-
-        private void Update()
-        {
-            if (connect)
-            {
-                if (handler == null)
-                {
-                    Connect();
-                }
-            }
-        }
-
-        protected void OnDisable()
-        {
-            Disconnect();
-        }
-
-        public bool IsConnected()
-        {
-            return handler != null;
-        }
-
-        public void Connect()
+        void Start()
         {
             UDPPacketIO udp = GetComponent<UDPPacketIO>();
             udp.init(RemoteIP, SendToPort, ListenerPort);
             handler = GetComponent<Osc>();
             handler.init(udp);
-            connect = true;
         }
-
-        public void Disconnect()
+        protected void OnDisable()
         {
             if (handler != null)
             {
@@ -70,6 +36,7 @@ namespace OSC {
             handler = null;
             System.GC.Collect();
         }
+
 
         void OnValidate()
         {

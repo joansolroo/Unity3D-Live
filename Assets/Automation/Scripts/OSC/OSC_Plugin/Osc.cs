@@ -31,6 +31,11 @@ public class Osc : MonoBehaviour
     Hashtable AddressTable;
 
 
+    void Start()
+    {
+        //do nothing, init must be called
+    }
+
     public void init(UDPPacketIO oscPacketIO)
     {
         OscPacketIO = oscPacketIO;
@@ -51,10 +56,7 @@ public class Osc : MonoBehaviour
         if (ReaderRunning) Cancel();
         //Debug.LogError("~Osc");
     }
-    public bool IsConnected()
-    {
-        return OscPacketIO != null && OscPacketIO.IsOpen();
-    }
+
     public void Cancel()
     {
         //Debug.Log("Osc Cancel start");
@@ -63,7 +65,7 @@ public class Osc : MonoBehaviour
             ReaderRunning = false;
             ReadThread.Abort();
         }
-        if (IsConnected())
+        if (OscPacketIO != null && OscPacketIO.IsOpen())
         {
             OscPacketIO.Close();
             OscPacketIO = null;

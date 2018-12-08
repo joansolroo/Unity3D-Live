@@ -37,15 +37,19 @@ namespace OSC
         float prev = float.MinValue;
         protected override bool Evaluate()
         {
-            
-            value = (float)GetFirstInput();
-            bool change = prev != value;
-            if (change)
+            object v = GetFirstInput();
+            if (v != null)
             {
-                sender.Send(address, value);
-                prev = value;
+                value = (float)v;
+                bool change = prev != value;
+                if (change)
+                {
+                    sender.Send(address, value);
+                    prev = value;
+                }
+                return change;
             }
-            return change;
+            return false;
         }
 
         public override object GetValue()

@@ -11,21 +11,18 @@ namespace OSC
     {
         public void Send(string address, object message)
         {
-            if (handler.IsConnected())
+            if(!values.ContainsKey(address) || values[address] != message)
             {
-                if (!values.ContainsKey(address) || values[address] != message)
-                {
-                    values[address] = message;
+                values[address] = message;
 
-                    OscMessage oscM = new OscMessage();
-                    oscM.Address = address;
-                    oscM.Values = new ArrayList();
-                    oscM.Values.Add(message);
-                    handler.Send(oscM);
-                }
+                OscMessage oscM = new OscMessage();
+                oscM.Address = address;
+                oscM.Values = new ArrayList();
+                oscM.Values.Add(message);
+                handler.Send(oscM);
             }
         }
-
+        
         // Start is called just before any of the Update methods is called the first time.
         protected override void InitCommunicator()
         {

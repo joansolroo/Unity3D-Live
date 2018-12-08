@@ -51,7 +51,7 @@ public class Remap : ParameterFilter {
     {
         if (CheckMenu())
         {
-            Remap p = AutoPipe.CreateGameObjectWithComponent<Remap>(menuCommand);
+            /*Remap p = */AutoPipe.CreateGameObjectWithComponent<Remap>(menuCommand);
         }
     }
     [MenuItem("GameObject/Parameters/Filters/Remap", true)]
