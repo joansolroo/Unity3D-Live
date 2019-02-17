@@ -84,30 +84,37 @@ public class AutoAnimatorParameter : MonoBehaviour
 
     float previous = 0;
     [SerializeField]public float smoothing = 0;
+    public float inValue =0;
+    public float outValue = 0;
     private void Update()
     {
-        float value = (float)animatorParameter.GetValue();
-        value = remap.Evaluate(value);
+        inValue = (float)animatorParameter.GetValue();
+        inValue = remap.Evaluate(inValue);
         //value = Mathf.MoveTowards(previous, value, Mathf.Abs(value - previous) * (1-smoothing));
        // previous = value;
         switch (parameterType)
         {
             case (AnimatorParameter.ParameterType.Int):
-                animator.SetInteger(parameterName, (int)value);
+                outValue = outValue * 127;
+                animator.SetInteger(parameterName, (int)outValue);
                 break;
             case (AnimatorParameter.ParameterType.Float):
-                animator.SetFloat(parameterName, value);
+                outValue = inValue;
+                animator.SetFloat(parameterName, outValue);
                 break;
             case (AnimatorParameter.ParameterType.Bool):
-                animator.SetBool(parameterName, value > 0);
+                outValue = inValue > 0.5f ? 1 : 0;
+                animator.SetBool(parameterName, outValue > 0.5f);
                 break;
             case (AnimatorParameter.ParameterType.Trigger):
-                if (value > 0)
+                outValue = inValue > 0 ? 1 : 0;
+                if (outValue > 0)
                 {
                     animator.SetTrigger(parameterName);
                 }
                 break;
         }
+        Debug.Log(parameterName + ":" + outValue);
     }
 }
 
@@ -128,20 +135,28 @@ public class AutoAnimatorParameterEditor : Editor
             options[p] = myTarget.animator.GetParameter(p).name;
         }
         myTarget.parameterIdx = EditorGUILayout.Popup("Parameter", myTarget.parameterIdx, options);
-        myTarget.parameterName = options[myTarget.parameterIdx];
-        myTarget.parameterType = AnimatorParameter.Cast(myTarget.animator.GetParameter(myTarget.parameterIdx).type);
+        if (myTarget.parameterIdx < options.Length)
+        {
+            myTarget.parameterName = options[myTarget.parameterIdx];
+            myTarget.parameterType = AnimatorParameter.Cast(myTarget.animator.GetParameter(myTarget.parameterIdx).type);
 
-        //EditorGUILayout.ObjectField("current pipe:", myTarget.animatorParameter, typeof(AnimatorParameter), true);
+            //EditorGUILayout.ObjectField("current pipe:", myTarget.animatorParameter, typeof(AnimatorParameter), true);
 
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PrefixLabel("Channel");
-        myTarget.channelName = GUILayout.TextField(myTarget.channelName);
-        EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("Channel");
+            myTarget.channelName = GUILayout.TextField(myTarget.channelName);
+            EditorGUILayout.EndHorizontal();
 
-        myTarget.remap =  EditorGUILayout.CurveField("Remap:",myTarget.remap);
-        myTarget.smoothing = EditorGUILayout.Slider("Smoothing:", myTarget.smoothing, 0 ,1);
+            myTarget.remap = EditorGUILayout.CurveField("Remap:", myTarget.remap);
+            myTarget.smoothing = EditorGUILayout.Slider("Smoothing:", myTarget.smoothing, 0, 1);
 
-        myTarget.Setup();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("Value:");
+            GUILayout.TextField(myTarget.inValue.ToString());
+            EditorGUILayout.EndHorizontal();
 
+            myTarget.Setup();
+        }
+        EditorUtility.SetDirty(myTarget);
     }
 }

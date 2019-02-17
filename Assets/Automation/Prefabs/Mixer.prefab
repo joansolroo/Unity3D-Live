@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad041d3659bd00d468f88c057fa26f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  channels: 1
+  channels: 4
   OSCChannelOut:
   - /OSC-ch1
   LocalName:
