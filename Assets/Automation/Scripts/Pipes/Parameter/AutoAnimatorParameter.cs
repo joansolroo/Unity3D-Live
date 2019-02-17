@@ -16,6 +16,8 @@ public class AutoAnimatorParameter : MonoBehaviour
     [SerializeField] [HideInInspector] public string channelName;
     [SerializeField] [HideInInspector] public AnimationCurve remap;
 
+    public AutoAnimatorParameterEditor inspector;
+
     private void OnValidate()
     {
         animator = this.GetComponent<Animator>();
@@ -86,22 +88,21 @@ public class AutoAnimatorParameter : MonoBehaviour
     [SerializeField]public float smoothing = 0;
     public float inValue =0;
     public float outValue = 0;
+
     bool initialized = false;
     private void Update()
     {
-        float last = inValue;
+        float previous = inValue;
         inValue = (float)animatorParameter.GetValue();
         inValue = remap.Evaluate(inValue);
-
-        if (!initialized || last != inValue)
+        inValue = Mathf.MoveTowards(previous, inValue, Mathf.Abs(inValue - previous) * (1 - smoothing));
+        if (!initialized || previous != inValue)
         {
-            
-            //value = Mathf.MoveTowards(previous, value, Mathf.Abs(value - previous) * (1-smoothing));
-            // previous = value;
+            previous = inValue;
             switch (parameterType)
             {
                 case (AnimatorParameter.ParameterType.Int):
-                    outValue = inValue * 127;
+                    outValue = (int)(inValue * 127);
                     animator.SetInteger(parameterName, (int)outValue);
                     break;
                 case (AnimatorParameter.ParameterType.Float):
@@ -120,8 +121,11 @@ public class AutoAnimatorParameter : MonoBehaviour
                     }
                     break;
             }
-            Debug.Log(parameterName + ":" + outValue);
+           // Debug.Log(parameterName + ":" + outValue);
             initialized = true;
+
+           // Debug.Log("Upddate" + ", From channel:" + inValue + ", To animator:" + outValue);
+           
         }
     }
 }
@@ -132,15 +136,14 @@ public class AutoAnimatorParameter : MonoBehaviour
 [CustomEditor(typeof(AutoAnimatorParameter))]
 public class AutoAnimatorParameterEditor : Editor
 {
-    void Update()
+    AutoAnimatorParameter myTarget;
+    void Awake()
     {
-        Repaint();
+        myTarget = (AutoAnimatorParameter)target;
+        myTarget.inspector = this;
     }
     public override void OnInspectorGUI()
     {
-        
-        AutoAnimatorParameter myTarget = (AutoAnimatorParameter)target;
-
         string[] options = new string[myTarget.animator.parameterCount];
         for (int p = 0; p < myTarget.animator.parameterCount; ++p)
         {
@@ -165,9 +168,12 @@ public class AutoAnimatorParameterEditor : Editor
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel("From channel:");
             GUILayout.TextField(myTarget.inValue.ToString());
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel("To animator:");
             GUILayout.TextField(myTarget.outValue.ToString());
             EditorGUILayout.EndHorizontal();
+            //Debug.Log("OninspectorGUI" + ", From channel:" + myTarget.inValue + ", To animator:" + myTarget.outValue);
 
             myTarget.Setup();
         }
