@@ -11,7 +11,7 @@ public class AutoOSCOut : MonoBehaviour
     [SerializeField] public int channels = 4;
     [SerializeField] public List<string> OSCChannelOut = new List<string>();
     [SerializeField] public List<string> LocalName = new List<string>();
-
+    /*
     public void OnValidate()
     {
         if (OSCChannelOut == null || OSCChannelOut.Count == 0)
@@ -24,7 +24,7 @@ public class AutoOSCOut : MonoBehaviour
                 LocalName.Add("local_" + c);
             }
         }
-    }
+    }*/
     private void Awake()
     {
         for (int c = 0; c < OSCChannelOut.Count; ++c)
@@ -81,6 +81,8 @@ public class AutoOSCOutEditor : Editor
            
             EditorGUILayout.EndHorizontal();
         }
+
+        EditorUtility.SetDirty(myTarget);
     }
 }
 
