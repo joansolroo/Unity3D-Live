@@ -86,35 +86,43 @@ public class AutoAnimatorParameter : MonoBehaviour
     [SerializeField]public float smoothing = 0;
     public float inValue =0;
     public float outValue = 0;
+    bool initialized = false;
     private void Update()
     {
+        float last = inValue;
         inValue = (float)animatorParameter.GetValue();
         inValue = remap.Evaluate(inValue);
-        //value = Mathf.MoveTowards(previous, value, Mathf.Abs(value - previous) * (1-smoothing));
-       // previous = value;
-        switch (parameterType)
+
+        if (!initialized || last != inValue)
         {
-            case (AnimatorParameter.ParameterType.Int):
-                outValue = outValue * 127;
-                animator.SetInteger(parameterName, (int)outValue);
-                break;
-            case (AnimatorParameter.ParameterType.Float):
-                outValue = inValue;
-                animator.SetFloat(parameterName, outValue);
-                break;
-            case (AnimatorParameter.ParameterType.Bool):
-                outValue = inValue > 0.5f ? 1 : 0;
-                animator.SetBool(parameterName, outValue > 0.5f);
-                break;
-            case (AnimatorParameter.ParameterType.Trigger):
-                outValue = inValue > 0 ? 1 : 0;
-                if (outValue > 0)
-                {
-                    animator.SetTrigger(parameterName);
-                }
-                break;
+            
+            //value = Mathf.MoveTowards(previous, value, Mathf.Abs(value - previous) * (1-smoothing));
+            // previous = value;
+            switch (parameterType)
+            {
+                case (AnimatorParameter.ParameterType.Int):
+                    outValue = inValue * 127;
+                    animator.SetInteger(parameterName, (int)outValue);
+                    break;
+                case (AnimatorParameter.ParameterType.Float):
+                    outValue = inValue;
+                    animator.SetFloat(parameterName, outValue);
+                    break;
+                case (AnimatorParameter.ParameterType.Bool):
+                    outValue = inValue > 0.5f ? 1 : 0;
+                    animator.SetBool(parameterName, outValue > 0.5f);
+                    break;
+                case (AnimatorParameter.ParameterType.Trigger):
+                    outValue = inValue > 0 ? 1 : 0;
+                    if (outValue > 0)
+                    {
+                        animator.SetTrigger(parameterName);
+                    }
+                    break;
+            }
+            Debug.Log(parameterName + ":" + outValue);
+            initialized = true;
         }
-        Debug.Log(parameterName + ":" + outValue);
     }
 }
 
@@ -124,6 +132,10 @@ public class AutoAnimatorParameter : MonoBehaviour
 [CustomEditor(typeof(AutoAnimatorParameter))]
 public class AutoAnimatorParameterEditor : Editor
 {
+    void Update()
+    {
+        Repaint();
+    }
     public override void OnInspectorGUI()
     {
         
@@ -151,8 +163,10 @@ public class AutoAnimatorParameterEditor : Editor
             myTarget.smoothing = EditorGUILayout.Slider("Smoothing:", myTarget.smoothing, 0, 1);
 
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("Value:");
+            EditorGUILayout.PrefixLabel("From channel:");
             GUILayout.TextField(myTarget.inValue.ToString());
+            EditorGUILayout.PrefixLabel("To animator:");
+            GUILayout.TextField(myTarget.outValue.ToString());
             EditorGUILayout.EndHorizontal();
 
             myTarget.Setup();

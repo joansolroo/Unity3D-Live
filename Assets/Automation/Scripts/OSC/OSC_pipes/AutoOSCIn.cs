@@ -27,7 +27,7 @@ public class AutoOSCIn : MonoBehaviour
             }
         }*/
     }
-   /* private void Awake()
+    private void Awake()
     {
         for (int c = 0; c < OSCChannelIn.Count; ++c)
         {
@@ -41,7 +41,7 @@ public class AutoOSCIn : MonoBehaviour
             nx.Address = LocalName[c];
             nx.transform.parent = chgo.transform;
         }
-    }*/
+    }
 
 }
 
